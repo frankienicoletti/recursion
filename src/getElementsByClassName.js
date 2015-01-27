@@ -6,44 +6,24 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
 
-    var bod = document.body;
-    var cl = document.body.classList;
-    var childs = document.body.children;
     //result array
-    var nodeList = [];
+    var results = [];
 
-    //check if class exists in class list
-    var exists;
-    for (var i=0;i<cl.length;i++) {
-        exists = cl[i].search(className);
-    }
-    if (!exists) return;
-
-    //debugger;
-
-    //function that takes a node
-    function getNodesByClassName (className, node) {
-        var found;
-        for (var i=0;i<node.length;i++) {
-            found = node[i].search(className);
+    function recursiveFunction (className,parent) {
+        if (parent.classList && parent.classList.contains(className)) {
+            results.push(parent);
         }
-        if (found)
-            nodeList.push(node[i]);
-        return nodeList;
-    }
-    console.log("about to run on class list");
-    console.log(cl);
-    console.log("This " + getNodesByClassName(className, cl));
-    //if not found in class list
-    if (getNodesByClassName(className, cl) == []) {
-        console.log("Not in classlist");
-        return;
-    }
-    console.log("ran on class list");
 
-    getNodesByClassName(className, bod);
-    getNodesByClassName(className, childs);
+        if (parent.hasChildNodes()) {
+            for (var i = 0; i<parent.childNodes.length;i++) {
+                recursiveFunction(className,parent.childNodes[i]);
+            }
+        }
 
-    console.log(nodeList);
-    return nodeList;
+    }
+
+    recursiveFunction(className,document.body);
+    return results;
+    
+
 };
