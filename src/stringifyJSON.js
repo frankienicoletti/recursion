@@ -37,11 +37,8 @@ var stringifyJSON = function(obj) {
         var objString = "";
 
         // empty objects
-        if (Object.getOwnPropertyNames(obj).length === 0 ) {
-            console.log("In if");
-            stringified = "{}";
-            return stringified;
-        } else {
+        if (Object.getOwnPropertyNames(obj).length === 0 ) return "{}";
+        else {
 
             var i = 0;
 
